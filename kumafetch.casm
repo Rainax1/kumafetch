@@ -125,12 +125,12 @@ let Str :: kuma =
 
 fn kuma() {
     @if os.sysname == "posix" {
-        let List :: info = Linux()
+        let List :: info = Linux?
     }@else if os.sysname == "nt" {
-        let List :: info = Window()
+        let List :: info = Window?
     }
     @else os.sysname == "darwin" {
-        let List :: info = Darwin()
+        let List :: info = Darwin?
     }
 
     bunny, "Green" cwriteln
