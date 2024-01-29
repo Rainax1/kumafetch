@@ -1,0 +1,144 @@
+%refer *native*
+
+from *native* refer os
+
+
+class Linux :: List<Str> {
+    fn _init() -> Nothing {
+    }
+
+    fn OS() :: Str {
+        let Str :: distro =  os.Getenv("HOME")
+    }
+
+    fn Kernal() :: Str {
+        let Str :: procver = Readfile("/proc/version")
+        
+        procver =  procver.Split()@2
+    }
+
+    fn Shell() :: Str {
+        let Str :: shell = os.Getenv("SHELL")
+    }
+
+    fn WM() :: Str {
+       ;; will do later 
+       let Str :: wm = "None"
+
+    }
+    ret [distro, procver, shell, wm]
+
+}
+
+class Window :: List<Str> {
+
+    fn _init() :: Nothing {
+        pass
+    }
+
+    fn OS() :: Str {
+        ;; wmic should be available on all recent windows versions
+
+        let Str :: out = os.exec.Command(["wmic", "os", "get", "caption"])
+        let Str :: winver = out.Trimspace(out.Split("\r\r\n")[0])
+
+    }
+
+
+    fn Kernel() :: Str {
+        ;; wmic should be available on all recent windows versions
+
+        let Str :: out = os.exec.Command(["wmic", "os", "get", "version"])
+        let Str :: kernalver = out.Trimspace(out.Split("\r\r\n")[0])
+
+    }
+
+    fn Shell() :: Str {
+        let Str :: shell = "cmd.exe"
+        ;; TODO
+    }
+
+    fn WM() :: Str {
+        let Str :: wm = "Metro"
+        ;; TODO
+    }
+
+    ret [winver, kernalver, shell, wm]
+}
+
+
+class Darwin() :: List<Str> {
+
+    fn _init() :: Nothing {
+        pass
+    }
+
+    fn OS() :: Str {
+        ;; wmic should be available on all recent windows versions
+
+        let Str :: macver = ["sw_vers", "-productname"] os.exec.Command
+
+    }
+
+
+    fn Kernel() :: Str {
+        ;; wmic should be available on all recent windows versions
+
+        let Str :: kernalver = ["urname", "-r"] os.exec.Command
+    }
+
+    fn Shell() :: Str {
+        let Str ::  shell = "SHELL" os.Getenv
+        ;; TODO
+    }
+
+    fn WM() :: Str {
+        ;; AFAIK there are no other window manager than Quartz on Darwin
+        let Str :: wm = "Quartz"
+    }
+    ret [macver, kernalver, shell, wm]
+}
+
+fn usage() :: Str {
+    let Str :: usage = """
+
+    Tiny system info fetch utility.
+
+    Usage kumafetch [config] <args>
+        -h, --help          prints this help message
+        -d, --no-distro-color   don't use the color defined in os-release for the OS color
+
+        """
+        usage cwriteln
+}
+
+
+let Bool :: distcolor = True
+
+let Str :: kuma =
+"""         
+            
+   (\ /)    
+   ( . .)   
+   c(")(")
+"""
+
+fn kuma() {
+    @if os.sysname == "posix" {
+        let List :: info = Linux()
+    }@else if os.sysname == "nt" {
+        let List :: info = Window()
+    }
+    @else os.sysname == "darwin" {
+        let List :: info = Darwin()
+    }
+
+    bunny, "Green" cwriteln
+
+
+_start:
+    let Str :: z = "Formatted String" 
+    "Hello, World!" cwriteln
+    "{z}" fcwriteln
+
+_end
