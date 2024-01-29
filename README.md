@@ -1,6 +1,6 @@
 Bunnyfetch is a small and fast tool for getting info about your system.
 
-This program is written in <ins>Python and [casm](https://github.com/Rainax1/casm)</ins>
+This program is written in *** <ins>Python and [casm](https://github.com/Rainax1/casm)</ins> ***
 
 > [casm](https://github.com/Rainax1/casm) - This is programming language I wrote for just ,not that serious
 
