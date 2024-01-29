@@ -8,17 +8,17 @@ class Linux :: List<Str> {
     }
 
     fn OS() :: Str {
-        let Str :: distro =  os.Getenv("HOME")
+        let Str :: distro = "HOME" os.Getenv
     }
 
     fn Kernal() :: Str {
-        let Str :: procver = Readfile("/proc/version")
+        let Str :: procver = "/proc/version", "r" Readfile
         
         procver =  procver.Split()@2
     }
 
     fn Shell() :: Str {
-        let Str :: shell = os.Getenv("SHELL")
+        let Str :: shell = "SHELL" os.Getenv
     }
 
     fn WM() :: Str {
@@ -39,7 +39,7 @@ class Window :: List<Str> {
     fn OS() :: Str {
         ;; wmic should be available on all recent windows versions
 
-        let Str :: out = os.exec.Command(["wmic", "os", "get", "caption"])
+        let Str :: out = ["wmic", "os", "get", "caption"] os.exec.Command
         let Str :: winver = out.Trimspace(out.Split("\r\r\n")[0])
 
     }
@@ -48,7 +48,7 @@ class Window :: List<Str> {
     fn Kernel() :: Str {
         ;; wmic should be available on all recent windows versions
 
-        let Str :: out = os.exec.Command(["wmic", "os", "get", "version"])
+        let Str :: out = ["wmic", "os", "get", "version"] os.exec.Command
         let Str :: kernalver = out.Trimspace(out.Split("\r\r\n")[0])
 
     }
@@ -141,4 +141,12 @@ _start:
     "Hello, World!" cwriteln
     "{z}" fcwriteln
 
-_end
+    koshish {
+        kuma()
+    }
+    pakdo (Exception as e) {
+        "Something Went Wrong *\n", e cwriteln
+    }
+
+_end:
+    ret 0
