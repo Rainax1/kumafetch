@@ -26,7 +26,7 @@ class Linux :: List<Str> {
        let Str :: wm = "None"
 
     }
-    ret [distro, procver, shell, wm]
+    [distro, procver, shell, wm] ret
 
 }
 
@@ -63,7 +63,7 @@ class Window :: List<Str> {
         ;; TODO
     }
 
-    ret [winver, kernalver, shell, wm]
+    [winver, kernalver, shell, wm] ret
 }
 
 
@@ -96,7 +96,7 @@ class Darwin() :: List<Str> {
         ;; AFAIK there are no other window manager than Quartz on Darwin
         let Str :: wm = "Quartz"
     }
-    ret [macver, kernalver, shell, wm]
+    [macver, kernalver, shell, wm] ret
 }
 
 fn usage() :: Str {
@@ -145,8 +145,8 @@ _start:
         kuma()
     }
     pakdo (Exception as e) {
-        "Something Went Wrong *\n", e cwriteln
+        "Something Went Wrong *\n", {e} cwriteln
     }
 
 _end:
-    ret 0
+     0 ret
